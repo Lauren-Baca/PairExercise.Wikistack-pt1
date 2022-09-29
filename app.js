@@ -1,11 +1,14 @@
 const express = require('express');
 const morgan = require('morgan');
 const { addPage, editPage, main, userList, userPages, wikiPage, layout } = require('./views');
+const { db } = require('./models');
 const app = express();
 
 app.use(morgan("dev"));
 app.use(express.static('/public'));
 app.use(express.urlencoded({ extended: false }));
+
+db.authenticate().then(() => {console.log('connected to the datbase');});
 
 app.get('/', (req, res) => {
     console.log('Hello World');
